@@ -1,20 +1,20 @@
-import { PresentationalProps, ResultState } from '../PokemonGuesser/types';
-import { InfinitySpin } from 'react-loader-spinner';
-import { PokemonGuessingImage } from '../PokemonGuesser/components/PokemonGuessingImage';
+import { PresentationalProps, ResultState } from '../PokemonGuesser/types'
+import { InfinitySpin } from 'react-loader-spinner'
+import { PokemonGuessingImage } from '../PokemonGuesser/components/PokemonGuessingImage'
 import React from 'react'
 
 export const PokemonGuesserPresentational = (props: PresentationalProps) => {
-  const inputRef = React.useRef<HTMLInputElement>(null);
+  const inputRef = React.useRef<HTMLInputElement>(null)
 
   const onSubmit = (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    props.onCheck(inputRef.current.value);
-  };
+    e.preventDefault()
+    props.onCheck(inputRef.current.value)
+  }
 
   return (
     <React.Fragment>
       {props.isLoading ? (
-        <InfinitySpin width="80" color="green" />
+        <InfinitySpin width='80' color='green' />
       ) : (
         <React.Fragment>
           <div>
@@ -31,12 +31,12 @@ export const PokemonGuesserPresentational = (props: PresentationalProps) => {
               <form onSubmit={onSubmit}>
                 <input
                   ref={inputRef}
-                  type="text"
+                  type='text'
                   placeholder="Who's that Pokemon?"
-                  defaultValue=""
+                  defaultValue=''
                 />
                 {props.state === ResultState.GUESSING && (
-                  <button type="submit">Check</button>
+                  <button type='submit'>Check</button>
                 )}
               </form>
             )}
@@ -50,5 +50,5 @@ export const PokemonGuesserPresentational = (props: PresentationalProps) => {
         </React.Fragment>
       )}
     </React.Fragment>
-  );
-};
+  )
+}
