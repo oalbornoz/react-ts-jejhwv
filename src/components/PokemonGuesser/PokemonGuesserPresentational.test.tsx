@@ -95,8 +95,8 @@ describe('calls callbacks', () => {
         name: /check/i,
       })
     )
-    expect(mockOnCheck.mock.calls.length).toBe(1)
-    expect(mockOnCheck.mock.calls[0][0]).toBe(pokemon)
+    expect(mockOnCheck).toBeCalledTimes(1)
+    expect(mockOnCheck).toHaveBeenCalledWith(pokemon)
   })
   it('calls onRetry callback', () => {
     const mockOnRetry = jest.fn(() => {})
@@ -115,6 +115,6 @@ describe('calls callbacks', () => {
         name: /try again/i,
       })
     )
-    expect(mockOnRetry.mock.calls.length).toBe(1)
+    expect(mockOnRetry).toBeCalledTimes(1)
   })
 })
