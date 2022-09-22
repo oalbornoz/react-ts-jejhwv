@@ -9,6 +9,21 @@ import { ResultState } from './types'
 import userEvent from '@testing-library/user-event'
 
 describe('renders PokemonGuesserPresentational', () => {
+  it('renders image', () => {
+    render(
+      <PokemonGuesserPresentational
+        pokemon={mockedPokemon}
+        isLoading={false}
+        state={ResultState.GUESSING}
+        onCheck={() => {}}
+        onRetry={() => {}}
+      />
+    )
+    expect(screen.getByRole('img')).toHaveAttribute(
+      'src',
+      `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${mockedPokemon.id}.png`
+    )
+  })
   it('renders form', () => {
     render(
       <PokemonGuesserPresentational
