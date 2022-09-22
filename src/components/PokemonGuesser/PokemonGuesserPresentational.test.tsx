@@ -6,6 +6,7 @@ import '@testing-library/jest-dom'
 import { mockedPokemon } from '../../../__mocks__'
 
 import { ResultState } from './types'
+import userEvent from '@testing-library/user-event'
 
 describe('renders PokemonGuesserPresentational', () => {
   it('renders form', () => {
@@ -71,5 +72,49 @@ describe('renders PokemonGuesserPresentational', () => {
       name: /keep playing/i,
     })
     expect(buttonElement).toBeInTheDocument()
+  })
+})
+
+describe('calls callbacks', () => {
+  it('calls onCheck with the typed value', () => {
+    const mockOnCheck = jest.fn(() => {})
+
+    render(
+      <PokemonGuesserPresentational
+        pokemon={mockedPokemon}
+        isLoading={false}
+        state={ResultState.GUESSING}
+        onCheck={mockOnCheck}
+        onRetry={() => {}}
+      />
+    )
+    const pokemon = 'pikachu'
+    userEvent.type(screen.getByRole('textbox'), pokemon)
+    userEvent.click(
+      screen.getByRole('button', {
+        name: /check/i,
+      })
+    )
+    expect(mockOnCheck.mock.calls.length).toBe(1)
+    expect(mockOnCheck.mock.calls[0][0]).toBe(pokemon)
+  })
+  it('calls onRetry callback', () => {
+    const mockOnRetry = jest.fn(() => {})
+
+    render(
+      <PokemonGuesserPresentational
+        pokemon={mockedPokemon}
+        isLoading={false}
+        state={ResultState.ERROR}
+        onCheck={() => {}}
+        onRetry={mockOnRetry}
+      />
+    )
+    userEvent.click(
+      screen.getByRole('button', {
+        name: /try again/i,
+      })
+    )
+    expect(mockOnRetry.mock.calls.length).toBe(1)
   })
 })
